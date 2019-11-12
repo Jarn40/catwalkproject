@@ -9,8 +9,13 @@ import { AddMercadoComponent } from './supermercado/add-mercado/add-mercado.comp
 const routes: Routes = [
   {
     path: '',
+    component: HomeComponent
+  },
+  {
+    path: 'add-mercado',
     component: AddMercadoComponent
   }
+
 ];
 
 @NgModule({

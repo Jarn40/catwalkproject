@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
 
@@ -10,18 +10,36 @@ import { Router } from '@angular/router';
 })
 export class AddMercadoComponent implements OnInit {
 
-  mercadoForm: FormGroup;
-  file: File;
+  supermercadoForm = new FormGroup({
+    name: new FormControl(''),
+    description: new FormControl(''),
+    address: new FormGroup({
+      street: new FormControl(''),
+      number: new FormControl(''),
+      district: new FormControl(''),
+      city: new FormControl(''),
+      state: new FormControl(''),
+      country: new FormControl(''),
+      zip: new FormControl('')
+    }),
+    mainImage: new FormControl(''),
+    additionalImages: new FormControl('')
+  });
 
   constructor(
     private formBuilder: FormBuilder
   ) { }
 
   ngOnInit() {
-    this.mercadoForm = this.formBuilder.group({
-      file: ['', Validators.required],
-      description: ['', Validators.maxLength(300)],
-      allowComments: [true]
-    })
+    // this.supermercadoForm = this.formBuilder.group({
+    //   file: ['', Validators.required],
+    //   description: ['', Validators.maxLength(300)],
+    //   allowComments: [true]
+    // })
   }
+
+  upload() {
+    console.warn(this.supermercadoForm.value);
+  }
+
 }

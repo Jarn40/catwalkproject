@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SupermercadoComponent } from './view/supermercado.component';
 import { FulladdressPipe } from '../pipes/fulladdress.pipe';
 import { AddMercadoComponent } from './add-mercado/add-mercado.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [SupermercadoComponent, FulladdressPipe, AddMercadoComponent],
@@ -13,6 +14,8 @@ import { AddMercadoComponent } from './add-mercado/add-mercado.component';
     CommonModule,
     RouterModule,
     HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [FulladdressPipe],
   exports: [

@@ -1,13 +1,13 @@
 <div style="width: 100vw; height: 100vh;">
     <as-split direction="horizontal">
-        <button class="btn btn-primary">Add</button>
-        <as-split-area >
+        <button [routerLink]="['add-mercado']" class=" btn btn-primary">Add</button>
+        <as-split-area>
             <div class="container">
                 <app-supermercado></app-supermercado>
             </div>
         </as-split-area>
         <as-split-area>
-                <app-mapa></app-mapa>
+            <app-mapa></app-mapa>
         </as-split-area>
     </as-split>
 </div>
