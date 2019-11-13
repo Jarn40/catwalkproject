@@ -14,7 +14,8 @@ import { Supermercado } from 'src/app/interfaces/supermercado.interface';
   styleUrls: ['./add-mercado.component.scss']
 })
 export class AddMercadoComponent implements OnInit {
-  private control: FormArray;
+  private extraControl: FormArray;
+  private mainControl: FormArray;
   public supermercadoForm: FormGroup;
   router: any;
 
@@ -26,10 +27,10 @@ export class AddMercadoComponent implements OnInit {
 
   ngOnInit() {
     this.supermercadoForm = this.formBuilder.group({
-        superMarketName: this.formBuilder.control(''),
-        superMarketDescription: this.formBuilder.control(''),
-        superMarketPhone: this.formBuilder.control(''),
-        superMarketLocation: new FormGroup({
+      superMarketName: this.formBuilder.control(''),
+      superMarketDescription: this.formBuilder.control(''),
+      superMarketPhone: this.formBuilder.control(''),
+      superMarketLocation: new FormGroup({
         street: this.formBuilder.control(''),
         number: this.formBuilder.control(''),
         district: this.formBuilder.control(''),
@@ -38,41 +39,47 @@ export class AddMercadoComponent implements OnInit {
         country: this.formBuilder.control(''),
         zip: this.formBuilder.control('')
       }),
-      superMarketMainImage: this.formBuilder.control(''),
+      superMarketMainImage: this.formBuilder.array([]),
       superMarketAdditionalImages: this.formBuilder.array([])
     })
-    this.control = this.supermercadoForm.controls['superMarketAdditionalImages'] as FormArray;
+    this.extraControl = this.supermercadoForm.controls['superMarketAdditionalImages'] as FormArray;
+    this.mainControl = this.supermercadoForm.controls['superMarketMainImage'] as FormArray
     //this.control.push(this.formBuilder.control(2))
   }
 
   upload() {
-    // console.warn(this.supermercadoForm.value);
-    // console.log(typeof(this.supermercadoForm.value))
-    this.getMercadoService.addMercado(JSON.stringify(this.supermercadoForm.value))
-    // .subscribe((data)=>{console.log(data)})
-    .subscribe(
-      (val) => {
-          console.log("POST call successful value returned in body", 
-                      val);
-      },
-      response => {
+    console.log("UPLOAD")
+    console.warn(this.supermercadoForm.value);
+
+    this.getMercadoService.addMercado(this.supermercadoForm.value)
+      // .subscribe((data) => { console.log(data) })
+      .subscribe(
+        (val) => {
+          console.log("POST call successful value returned in body",
+            val);
+        },
+        response => {
           console.log("POST call in error", response);
-      },
-      () => {
+        },
+        () => {
           console.log("The POST observable is now completed.");
-      });
+        });
   }
 
-  onSelectFile(event) {
+  onSelectFile(id, event) {
     if (event.target.files && event.target.files[0]) {
-        var filesAmount = event.target.files.length;
-        for (let i = 0; i < filesAmount; i++) {
-                var reader = new FileReader();
-                reader.onload = (event:any) => {                  
-                  this.control.push(this.formBuilder.control(event.target.result));
-                }
-                reader.readAsDataURL(event.target.files[i]);
+      var filesAmount = event.target.files.length;
+      for (let i = 0; i < filesAmount; i++) {
+        var reader = new FileReader();
+        reader.onload = (event: any) => {
+          if (id == 'extra') {
+            this.extraControl.push(this.formBuilder.control(event.target.result));
+          } else {
+            this.mainControl.push(this.formBuilder.control(event.target.result))
+          }
         }
+        reader.readAsDataURL(event.target.files[i]);
+      }
     }
   }
 

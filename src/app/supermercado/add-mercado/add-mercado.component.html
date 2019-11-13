@@ -3,8 +3,8 @@
     <form [formGroup]="supermercadoForm" (submit)="upload()">
         <div class="form-group">
             <label>Name
-                <input type="text" class="form-control form-control-sm" formControlName="superMarketName" placeholder="Market Name"
-                    required>
+                <input type="text" class="form-control form-control-sm" formControlName="superMarketName"
+                    placeholder="Market Name" required>
             </label>
         </div>
 
@@ -61,15 +61,17 @@
             <button type="button" (click)="mainImageInput.click()" class="btn btn-sm btn-primary">
                 <i class="align-middle"> Main Image</i>
             </button>
-            <input #mainImageInput hidden formControlName="superMarketMainImage" type="file" accept="image/*">
+            <input #mainImageInput hidden formControlName="superMarketMainImage" type="file"
+                (change)="onSelectFile('main',$event)" accept="image/*">
         </div>
         <div class="mb-2">
-            <button  type="button" (click)="additionalImagesInput.click()" class="btn btn-sm btn-primary">
+            <button type="button" (click)="additionalImagesInput.click()" class="btn btn-sm btn-primary">
                 <i class="align-middle"> Aditional Image</i>
             </button>
-            <input #additionalImagesInput hidden name="files[]" type="file" accept="image/*" (change)="onSelectFile($event)" multiple>
+            <input #additionalImagesInput hidden name="files[]" type="file" accept="image/*"
+                (change)="onSelectFile('extra',$event)" multiple>
         </div>
-        
+
         <button type="submit">Submit</button>
     </form>
     <!-- [disabled]="!supemercadoForm.valid" -->
