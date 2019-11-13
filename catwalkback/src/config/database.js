@@ -29,6 +29,6 @@ function deleteOne(id, callback) {
 }
 
 
-client.close()
+//client.close()
 
 module.exports = { findAll, findOne, insertOne, updateOne, deleteOne }

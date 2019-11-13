@@ -36,12 +36,15 @@ class SupermercadoControlador {
     insertOne() {
         return (req, res) => {
             const supermercadoDao = new SupermercadoDao(db)
-            supermercadoDao.insertOne(req.body)
-                .then(doc => {
-                    console.log("Supermercado Adicionado: " + doc["insertedId"])
-                    res.json(doc["insertedId"])
-                })
-                .catch(err => console.log(err))
+            console.log("Teste")
+            console.log(req.body)
+            res.json(req.body)
+            // supermercadoDao.insertOne(req.body)
+            //     .then(doc => {
+            //         console.log("Supermercado Adicionado: " + doc["insertedId"])
+            //         res.json(doc["insertedId"])
+            //     })
+            //     .catch(err => console.log(err))
         }
 
     }

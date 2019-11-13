@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { GetMercadoService } from './get-mercado.service';
+import { GetMercadoService } from './api-mercado.service';
 
 describe('GetMercadoService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));

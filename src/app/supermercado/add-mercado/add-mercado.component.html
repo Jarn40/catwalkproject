@@ -3,7 +3,7 @@
     <form [formGroup]="supermercadoForm" (submit)="upload()">
         <div class="form-group">
             <label>Name
-                <input type="text" class="form-control form-control-sm" formControlName="name" placeholder="Market Name"
+                <input type="text" class="form-control form-control-sm" formControlName="superMarketName" placeholder="Market Name"
                     required>
             </label>
         </div>
@@ -12,12 +12,12 @@
             <label>
                 Description:
             </label>
-            <textarea formControlName="description" class="form-control form-control-sm"
+            <textarea formControlName="superMarketDescription" class="form-control form-control-sm"
                 placeholder="Market Description"></textarea>
         </div>
 
 
-        <div class="form-group" formGroupName="address">
+        <div class="form-group" formGroupName="superMarketLocation">
             <h3>Address</h3>
             <div>
                 <label for="name">Street</label>
@@ -57,38 +57,19 @@
 
         </div>
 
-        <!-- 
-            <div class="form-group">
-                <label class="text-muted">
-                    Allow comments
-                    <input formControlName="allowComments" type="checkbox">
-                </label>
-            </div> -->
-
         <div class="mb-2">
-            <button immediateClick type="button" (click)="fileInput.click()" class="btn btn-sm btn-primary">
+            <button type="button" (click)="mainImageInput.click()" class="btn btn-sm btn-primary">
                 <i class="align-middle"> Main Image</i>
             </button>
-            <input hidden formControlName="mainImage" type="file" accept="image/*">
+            <input #mainImageInput hidden formControlName="superMarketMainImage" type="file" accept="image/*">
         </div>
         <div class="mb-2">
-            <button immediateClick type="button" (click)="fileInput.click()" class="btn btn-sm btn-primary">
+            <button  type="button" (click)="additionalImagesInput.click()" class="btn btn-sm btn-primary">
                 <i class="align-middle"> Aditional Image</i>
             </button>
-            <input #fileInput hidden formControlName="additionalImages" type="file" accept="image/*" multiple>
+            <input #additionalImagesInput hidden name="files[]" type="file" accept="image/*" (change)="onSelectFile($event)" multiple>
         </div>
-        <!-- <div *ngIf="!percentDone; else percent">
-                <button [disabled]="photoForm.invalid" type="submit" class="btn btn-primary btn-block">
-                    Upload
-                </button>
-                <a [routerLink]="['']" class="btn btn-secondary btn-block">Cancel</a>
-            </div> -->
-        <!--             
-            <ng-template #percent>
-                <div class="text-center display-4">
-                    uploading {{ percentDone }}%
-                </div>
-            </ng-template> -->
+        
         <button type="submit">Submit</button>
     </form>
     <!-- [disabled]="!supemercadoForm.valid" -->
