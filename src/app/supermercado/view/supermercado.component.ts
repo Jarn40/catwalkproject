@@ -3,6 +3,7 @@ import { Supermercado } from '../../interfaces/supermercado.interface'
 import { GetMercadoService } from '../../services/api-mercado/api-mercado.service'
 import { MapSearchService } from "../../services/map-search/map-search.service"
 import { FulladdressPipe } from '../../pipes/fulladdress.pipe';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-supermercado',
@@ -29,4 +30,17 @@ export class SupermercadoComponent implements OnInit, DoCheck {
       //console.log(this.enderecoToGeo.getLatLon(this.jsonToString.transform(mercado.superMarketLocation)).subscribe())
     })
   }
+
+  selfRemove(id) {
+    console.log(id)
+    this.getMercadoService.removeMercado(id).pipe(finalize(() => {
+      this.getMercadoService.getMercados().subscribe(mercado => {
+        this.supermercados = mercado
+      })
+    }))
+      .subscribe(response => {
+        console.log(response)
+      })
+  }
+
 }

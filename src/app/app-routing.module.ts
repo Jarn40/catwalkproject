@@ -4,6 +4,7 @@ import { SupermercadoComponent } from './supermercado/view/supermercado.componen
 import { HomeComponent } from './home/home.component';
 import { MapaComponent } from './mapa/mapa.component';
 import { AddMercadoComponent } from './supermercado/add-mercado/add-mercado.component';
+import { EditMercadoComponent } from './supermercado/edit-mercado/edit-mercado.component';
 
 
 const routes: Routes = [
@@ -14,6 +15,14 @@ const routes: Routes = [
   {
     path: 'add-mercado',
     component: AddMercadoComponent
+  },
+  {
+    path: 'edit/:id',
+    component: EditMercadoComponent
+  },
+  {
+    path: '**',
+    redirectTo: ''
   }
 
 ];

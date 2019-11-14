@@ -1,30 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
-import { Router } from '@angular/router';
-import { GetMercadoService } from '../../services/api-mercado/api-mercado.service'
-
-import { HttpEvent, HttpEventType } from '@angular/common/http';
-import { finalize } from 'rxjs/operators';
-import { HttpResponse } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Supermercado } from 'src/app/interfaces/supermercado.interface';
+import { Observable } from 'rxjs';
+import { GetMercadoService } from 'src/app/services/api-mercado/api-mercado.service';
+import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { finalize } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-add-mercado',
-  templateUrl: './add-mercado.component.html',
-  styleUrls: ['./add-mercado.component.scss']
+  selector: 'app-edit-mercado',
+  templateUrl: './edit-mercado.component.html',
+  styleUrls: ['./edit-mercado.component.scss']
 })
-export class AddMercadoComponent implements OnInit {
-  private extraControl: FormArray;
-  private mainControl: FormArray;
-  public supermercadoForm: FormGroup;
+export class EditMercadoComponent implements OnInit {
+
+  mercadoId: string
   public mainImg;
   public additionalImg: any[] = [];
+  public supermercadoForm: FormGroup;
+  private extraControl: FormArray;
+  private mainControl: FormArray;
 
   constructor(
     private formBuilder: FormBuilder,
     private getMercadoService: GetMercadoService,
-    private router: Router
-
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
@@ -46,11 +46,23 @@ export class AddMercadoComponent implements OnInit {
     })
     this.extraControl = this.supermercadoForm.controls['superMarketAdditionalImages'] as FormArray;
     this.mainControl = this.supermercadoForm.controls['superMarketMainImage'] as FormArray
+
+    //this.control.push(this.formBuilder.control(2))
+    this.mercadoId = this.route.snapshot.params.id;
+    this.getMercadoService.getMercado(this.mercadoId).subscribe(mercado => {
+      this.supermercadoForm.patchValue({
+        superMarketName: mercado.superMarketName,
+        superMarketDescription: mercado.superMarketDescription,
+        superMarketPhone: mercado.superMarketPhone,
+        superMarketLocation: mercado.superMarketLocation,
+      })
+      this.mainImg = mercado.superMarketMainImage;
+      this.additionalImg = mercado.superMarketAdditionalImages;
+    })
   }
 
-  upload() {
-    console.log(this.supermercadoForm.value)
-    this.getMercadoService.addMercado(this.supermercadoForm.value)
+  edit() {
+    this.getMercadoService.editMercado(this.mercadoId, this.supermercadoForm.value)
       .pipe(finalize(() => {
         this.router.navigate(['/']);
       }))
@@ -96,6 +108,7 @@ export class AddMercadoComponent implements OnInit {
     }
 
   }
+
 
 
 }

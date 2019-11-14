@@ -1,6 +1,5 @@
-<button [routerLink]="['']" class=" btn btn-primary">Voltar</button>
-<div class="container">
-    <form [formGroup]="supermercadoForm" (submit)="upload()">
+<div class=" container bg-white border">
+    <form [formGroup]="supermercadoForm" (submit)="edit()">
         <div class="form-group">
             <label>Name
                 <input type="text" class="form-control form-control-sm" formControlName="superMarketName"
@@ -15,13 +14,13 @@
             <textarea formControlName="superMarketDescription" class="form-control form-control-sm"
                 placeholder="Market Description"></textarea>
         </div>
+
         <div class="form-group">
             <label>Contact:
                 <input type="number" class="form-control form-control-sm" formControlName="superMarketPhone"
                     placeholder="Market Contact">
             </label>
         </div>
-
 
         <div class="form-group" formGroupName="superMarketLocation">
             <h3>Address</h3>
@@ -62,6 +61,7 @@
                 placeholder="Zip Number" required style="width: 150px;">
 
         </div>
+
         <div class="row container" style="width: 100%;">
             <div class="container" style="display: inline-block; width: 50%;">
                 <div class="mb-2">
@@ -87,14 +87,19 @@
                 <div class="container" style="display: inline-block;">
                     <img class="m-1" apDarkenOnHover (click)="removeImg('extra',i)"
                         *ngFor="let extraImg of additionalImg;let i = index" style=" display:
-                        inline-block; width: 25%; height: 25%;; margin: 1px;" src={{extraImg}} class="card-img-top">
+                            inline-block; width: 25%; height: 25%;; margin: 1px;" src={{extraImg}}
+                        class="card-img-top">
                 </div>
             </div>
         </div>
 
-        <div class="m-2">
-            <button class="btn btn-sm btn-success m-2" type="submit">Add</button>
+
+        <div>
+            <button class="btn btn-sm btn-success m-2" type="submit">Edit</button>
             <button [routerLink]="['']" class="btn btn-sm btn-danger m-2 " type="submit">Cancel</button>
         </div>
+
     </form>
+    <!-- [disabled]="!supemercadoForm.valid" -->
+
 </div>

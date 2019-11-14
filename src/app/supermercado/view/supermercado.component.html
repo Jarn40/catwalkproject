@@ -1,24 +1,36 @@
 <div style="background-color: rgba(0, 0,0, 0.0); display: flex; flex-flow: row wrap">
     <div class="card m-2 shadow" *ngFor="let mercado of supermercados"
-        style="min-width: 14rem; max-width: 14rem; max-height: 28rem;">
-        <img src={{mercado.superMarketMainImage}} class="card-img-top">
-        <div class="scrollbar-deep-purple overflow-auto thin" style="white-space: nowrap;">
-            <img style="display: inline-block; width: 25%; margin: 1px;" src={{img}}
-                *ngFor="let img of mercado.superMarketAdditionalImages" class="card-img-top">
-            <p *ngFor="let img of mercado.superMarketAdditionalImages">{{img}}</p>
+        style="min-width: 150px; max-width: 300px; min-height: 300px;max-height: 400px;">
+
+        <img src={{mercado.superMarketMainImage}} class="card-img-top" style="max-height: 20%;min-height: 20%;">
+
+        <div class="scrollbar-deep-purple overflow-auto thin" style="white-space: nowrap; height: 20%;">
+            <img apDarkenOnHover brightness="90%" style="display: inline-block; height: 90%; width: 25%; margin: 1px;"
+                src={{img}} *ngFor="let img of mercado.superMarketAdditionalImages" class="card-img-top">
         </div>
+
         <div class="card-body m-0 p-1">
-            <h5 class="card-title">{{mercado.superMarketName}}</h5>
-            <p class="card-text overflow-auto text-justify p-1 scrollbar-deep-purple square thin"
-                style="font-size: 60%; max-height: 80px;">{{mercado.superMarketDescription}}</p>
+            <h5 class="card-title text-center">{{mercado.superMarketName}}</h5>
+
+            <p *ngIf="mercado.superMarketDescription"
+                class="card-text overflow-auto text-justify p-1 scrollbar-deep-purple square thin"
+                style="background-color: rgba(0, 0,0, 0.05);font-size: 60%; max-height: 80px;">
+                {{mercado.superMarketDescription}}</p>
+
+            <p *ngIf="mercado.superMarketPhone" class="m-0 ml-2" style="font-size: 60%;"><b>Contato:
+                </b>{{mercado.superMarketPhone}}</p>
         </div>
-        <p class="m-0 ml-2" style="font-size: 60%;"><b>Contato: </b>{{mercado.superMarketPhone}}</p>
+
         <div>
-            <a href=" #" class="btn btn-sm btn-primary m-1 float-left" style="position: relative;left: 0px;">Edit</a>
-            <a href="#" class="btn btn-sm btn-primary m-1 float-right" style="position: relative;right: 0px;">Remove</a>
+            <a [routerLink]="['/edit', mercado._id]" class="btn btn-sm btn-primary m-1 float-left"
+                style="position: relative;left: 0px;">Edit</a>
+            <a (click)="selfRemove(mercado._id)" class="btn btn-sm btn-danger m-1 float-right"
+                style="position: relative;right: 0px;">Remove</a>
         </div>
-        <div class="card-footer text-muted text-center" style="font-size: 60%;">
-            {{mercado.superMarketLocation | FulladdressPipe}}
+
+        <div *ngIf="mercado.superMarketLocation.street"
+            class="d-flex card-footer text-muted align-items-center text-center" style="font-size: 60%; height: 80px;">
+            <p>{{mercado.superMarketLocation | FulladdressPipe}}</p>
         </div>
     </div>
 </div>

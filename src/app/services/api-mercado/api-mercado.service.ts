@@ -4,8 +4,6 @@ import { Supermercado } from "../../interfaces/supermercado.interface"
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment'
 const API_URL = environment.API_URL
-const EC2 = "http://ec2-3-16-40-249.us-east-2.compute.amazonaws.com:8001"
-const elastic = "http://catwalkmockup-env.7sicyxp758.us-east-2.elasticbeanstalk.com:8001"
 
 
 @Injectable({
@@ -21,20 +19,46 @@ export class GetMercadoService {
     return this.http.get<Supermercado[]>(API_URL)
   }
 
+  getMercado(id) {
+    return this.http.get<Supermercado>(`${API_URL}/${id}`)
+  }
+
   addMercado(mercado) {
     return this.http.post(
       API_URL + "/insertOne",
       this.x_www_form_generator(mercado),
       {
         headers: {
-          //'Content-Type': 'application/json'
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+  }
+
+  editMercado(id, mercado) {
+    return this.http.post(
+      `${API_URL}/${id}`,
+      this.x_www_form_generator(mercado),
+      {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+  }
+
+  removeMercado(id) {
+    console.log(id)
+    return this.http.post(
+      API_URL + "/deleteOne",
+      this.x_www_form_generator({ "id": id }),
+      {
+        headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
       })
   }
 
   //provavelmente seja uma gambiarra até entender porque o CORS não permite acesso com json.
-  x_www_form_generator(obj: Supermercado) {
+  x_www_form_generator(obj: any) {
     let request = ''
     for (let i = 0; i < Object.keys(obj).length; i++) {
       let key = Object.keys(obj)[i]
@@ -53,7 +77,7 @@ export class GetMercadoService {
       }
 
     }
-
+    console.log(request)
     return request
   }
 
