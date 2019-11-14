@@ -17,11 +17,12 @@ export class AddMercadoComponent implements OnInit {
   private extraControl: FormArray;
   private mainControl: FormArray;
   public supermercadoForm: FormGroup;
-  router: any;
+
 
   constructor(
     private formBuilder: FormBuilder,
-    private getMercadoService: GetMercadoService
+    private getMercadoService: GetMercadoService,
+    private router: Router,
 
   ) { }
 
@@ -52,7 +53,9 @@ export class AddMercadoComponent implements OnInit {
     console.warn(this.supermercadoForm.value);
 
     this.getMercadoService.addMercado(this.supermercadoForm.value)
-      // .subscribe((data) => { console.log(data) })
+      .pipe(finalize( () =>{
+        this.router.navigate(['/']);
+      }))
       .subscribe(
         (val) => {
           console.log("POST call successful value returned in body",
@@ -73,6 +76,7 @@ export class AddMercadoComponent implements OnInit {
         var reader = new FileReader();
         reader.onload = (event: any) => {
           if (id == 'extra') {
+            console.log(event.target.result)
             this.extraControl.push(this.formBuilder.control(event.target.result));
           } else {
             this.mainControl.push(this.formBuilder.control(event.target.result))

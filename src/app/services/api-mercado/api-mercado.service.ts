@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, } from '@angular/common/http';
 import { Supermercado } from "../../interfaces/supermercado.interface"
 import { Observable } from 'rxjs';
-const API_URL = 'http://localhost:8001';
+import { environment } from '../../../environments/environment'
+const API_URL = environment.API_URL
 const EC2 = "http://ec2-3-16-40-249.us-east-2.compute.amazonaws.com:8001"
 const elastic = "http://catwalkmockup-env.7sicyxp758.us-east-2.elasticbeanstalk.com:8001"
 
@@ -17,12 +18,12 @@ export class GetMercadoService {
   ) { }
 
   getMercados() {
-    return this.http.get<Supermercado[]>(EC2)
+    return this.http.get<Supermercado[]>(API_URL)
   }
 
   addMercado(mercado) {
     return this.http.post(
-      EC2 + "/insertOne",
+      API_URL + "/insertOne",
       this.x_www_form_generator(mercado),
       {
         headers: {
