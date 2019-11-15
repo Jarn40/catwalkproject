@@ -26,10 +26,10 @@ export class GetMercadoService {
   addMercado(mercado) {
     return this.http.post(
       API_URL + "/insertOne",
-      this.x_www_form_generator(mercado),
+      mercado,
       {
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
+          'Content-Type': 'application/json'
         }
       })
   }
@@ -37,49 +37,22 @@ export class GetMercadoService {
   editMercado(id, mercado) {
     return this.http.post(
       `${API_URL}/${id}`,
-      this.x_www_form_generator(mercado),
+      mercado,
       {
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
+          'Content-Type': 'application/json'
         }
       })
   }
 
   removeMercado(id) {
-    console.log(id)
     return this.http.post(
       API_URL + "/deleteOne",
-      this.x_www_form_generator({ "id": id }),
+      { "id": id },
       {
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
+          'Content-Type': 'application/json'
         }
       })
   }
-
-  //provavelmente seja uma gambiarra até entender porque o CORS não permite acesso com json.
-  x_www_form_generator(obj: any) {
-    let request = ''
-    for (let i = 0; i < Object.keys(obj).length; i++) {
-      let key = Object.keys(obj)[i]
-      if (i == 0) {
-        if (typeof (obj[key]) != 'object') {
-          request += `${key}=${obj[key]}`
-        } else {
-          request += `${key}=${JSON.stringify(obj[key])}`
-        }
-      } else {
-        if (typeof (obj[key]) != 'object') {
-          request += `&${key}=${obj[key]}`
-        } else {
-          request += `&${key}=${JSON.stringify(obj[key])}`
-        }
-      }
-
-    }
-    console.log(request)
-    return request
-  }
-
-
 }

@@ -8,6 +8,7 @@ import { HomeComponent } from './home/home.component';
 import { MapaComponent } from './mapa/mapa.component';
 
 import { AngularSplitModule } from 'angular-split';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { AngularSplitModule } from 'angular-split';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     SupermercadoModule,
     AngularSplitModule.forRoot(),

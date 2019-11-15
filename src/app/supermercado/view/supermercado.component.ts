@@ -27,8 +27,7 @@ export class SupermercadoComponent implements OnInit {
     })
   }
 
-  selfRemove(id) {
-    console.log(id)
+  selfRemove(id) {  
     this.getMercadoService.removeMercado(id).pipe(finalize(() => {
       this.getMercadoService.getMercados().subscribe(mercado => {
         this.supermercados = mercado
