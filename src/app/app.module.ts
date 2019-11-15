@@ -6,15 +6,16 @@ import { AppComponent } from './app.component';
 import { SupermercadoModule } from './supermercado/supermercado.module';
 import { HomeComponent } from './home/home.component';
 import { MapaComponent } from './mapa/mapa.component';
-import { XWheelDirective } from './directives/x-wheel/x-wheel.directive';
+
 import { AngularSplitModule } from 'angular-split';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     MapaComponent,
-    XWheelDirective,
+    
   ],
   imports: [
     BrowserModule,

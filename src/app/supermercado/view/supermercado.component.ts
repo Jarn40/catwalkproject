@@ -10,7 +10,7 @@ import { finalize } from 'rxjs/operators';
   templateUrl: './supermercado.component.html',
   styleUrls: ['./supermercado.component.scss']
 })
-export class SupermercadoComponent implements OnInit, DoCheck {
+export class SupermercadoComponent implements OnInit {
 
   supermercados: Supermercado[] = []
 
@@ -23,11 +23,7 @@ export class SupermercadoComponent implements OnInit, DoCheck {
   ngOnInit() {
     this.getMercadoService.getMercados().subscribe(mercado => {
       this.supermercados = mercado
-    })
-  }
-  ngDoCheck() {
-    this.supermercados.forEach(mercado => {
-      //console.log(this.enderecoToGeo.getLatLon(this.jsonToString.transform(mercado.superMarketLocation)).subscribe())
+      this.enderecoToGeo.setLatLon(mercado)
     })
   }
 

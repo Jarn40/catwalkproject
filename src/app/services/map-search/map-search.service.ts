@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Supermercado } from '../../interfaces/supermercado.interface'
+import { FulladdressPipe } from 'src/app/pipes/fulladdress.pipe';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 const API_URL_GEO = "https://api.opencagedata.com/geocode/v1/json?key=1b2e303836164c4b874eb1319a366b0a&q=";
 const API_URL = 'http://localhost:8001';
@@ -9,13 +12,34 @@ const API_URL = 'http://localhost:8001';
 })
 export class MapSearchService {
 
+  private loc = new BehaviorSubject(null)
+  private flyTo = new BehaviorSubject(null)
+  
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private jsonToString: FulladdressPipe
   ) { }
 
-  getLatLon(address) {
-    console.log(address)
-    return this.http.get(API_URL)
-    //return this.http.get(API_URL_GEO + address)
+  setLatLon(mercados: Supermercado[]) {
+    //let add = "Rua Carlos Marighella, São Marcos, Salvador, BA"
+    mercados.forEach((supermercado:Supermercado) =>{
+      this.http.get<any>(API_URL_GEO+this.jsonToString.transform(supermercado.superMarketLocation)).subscribe(result => {
+        this.loc.next([supermercado.superMarketName,result.results[0].geometry])
+      })
+       
+    })
   }
+
+  getLatLon(){
+    return this.loc.asObservable()
+  }
+
+  flyUpdater(name){
+    this.flyTo.next(name)
+  }
+
+  flyLocate(){
+    return this.flyTo.asObservable()
+  }
+
 }

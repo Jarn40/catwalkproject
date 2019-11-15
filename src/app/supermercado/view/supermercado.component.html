@@ -1,5 +1,5 @@
 <div style="background-color: rgba(0, 0,0, 0.0); display: flex; flex-flow: row wrap">
-    <div class="card m-2 shadow" *ngFor="let mercado of supermercados"
+    <div appFlyToLocation nameRef={{mercado.superMarketName}} class="card m-2 shadow" *ngFor="let mercado of supermercados"
         style="min-width: 150px; max-width: 300px; min-height: 300px;max-height: 400px;">
 
         <img src={{mercado.superMarketMainImage}} class="card-img-top" style="max-height: 20%;min-height: 20%;">
