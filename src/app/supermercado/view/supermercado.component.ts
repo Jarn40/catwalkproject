@@ -16,21 +16,23 @@ export class SupermercadoComponent implements OnInit {
 
   constructor(
     private getMercadoService: GetMercadoService,
-    private enderecoToGeo: MapSearchService,
+    private mapservice: MapSearchService,
     private jsonToString: FulladdressPipe
   ) { }
 
   ngOnInit() {
     this.getMercadoService.getMercados().subscribe(mercado => {
       this.supermercados = mercado
-      this.enderecoToGeo.setLatLon(mercado)
+      this.mapservice.setLatLon(mercado)
     })
   }
 
-  selfRemove(id) {  
-    this.getMercadoService.removeMercado(id).pipe(finalize(() => {
+  selfRemove(id,nome) {  
+    this.getMercadoService.removeMercado(id)
+    .pipe(finalize(() => {
       this.getMercadoService.getMercados().subscribe(mercado => {
         this.supermercados = mercado
+        this.mapservice.removeUpdate(id)
       })
     }))
       .subscribe(response => {

@@ -1,4 +1,5 @@
 export interface Supermercado {
+    _id: string,
     superMarketName: string,
     superMarketMainImage: string,
     superMarketAdditionalImages: string[],

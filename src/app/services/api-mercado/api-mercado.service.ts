@@ -16,6 +16,7 @@ export class GetMercadoService {
   ) { }
 
   getMercados() {
+    console.log(" GETMERCADOS")
     return this.http.get<Supermercado[]>(API_URL)
   }
 
@@ -35,7 +36,7 @@ export class GetMercadoService {
   }
 
   editMercado(id, mercado) {
-    return this.http.post(
+    return this.http.put(
       `${API_URL}/${id}`,
       mercado,
       {
@@ -46,13 +47,6 @@ export class GetMercadoService {
   }
 
   removeMercado(id) {
-    return this.http.post(
-      API_URL + "/deleteOne",
-      { "id": id },
-      {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
+    return this.http.delete(`${API_URL}/${id}`)
   }
 }

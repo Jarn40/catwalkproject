@@ -14,6 +14,7 @@ export class MapSearchService {
 
   private loc = new BehaviorSubject(null)
   private flyTo = new BehaviorSubject(null)
+  private layerToRemove = new BehaviorSubject(null)
   
   constructor(
     private http: HttpClient,
@@ -24,7 +25,7 @@ export class MapSearchService {
     //let add = "Rua Carlos Marighella, São Marcos, Salvador, BA"
     mercados.forEach((supermercado:Supermercado) =>{
       this.http.get<any>(API_URL_GEO+this.jsonToString.transform(supermercado.superMarketLocation)).subscribe(result => {
-        this.loc.next([supermercado.superMarketName,result.results[0].geometry])
+        this.loc.next([supermercado.superMarketName, result.results[0].geometry, supermercado._id])
       })
        
     })
@@ -36,6 +37,13 @@ export class MapSearchService {
 
   flyUpdater(name){
     this.flyTo.next(name)
+  }
+  removeUpdate(ref_id){
+    this.layerToRemove.next(ref_id)
+  }
+
+  getLayertoRemove(){
+    return this.layerToRemove.asObservable()
   }
 
   flyLocate(){

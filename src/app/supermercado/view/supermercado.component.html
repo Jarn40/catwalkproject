@@ -1,9 +1,8 @@
 <div style="background-color: rgba(0, 0,0, 0.0); display: flex; flex-flow: row wrap">
-    <div appFlyToLocation nameRef={{mercado.superMarketName}} class="card m-2 shadow" *ngFor="let mercado of supermercados"
+    <div appFlyToLocation nameRef={{mercado._id}} class="card m-2 shadow" *ngFor="let mercado of supermercados"
         style="min-width: 10rem; max-width: 20rem; max-height: 30rem;">
         
-        <img src={{mercado.superMarketMainImage}} class="card-img-top" style="max-height: 20%;min-height: 20%;">
-        
+        <img *ngIf="mercado.superMarketMainImage" src={{mercado.superMarketMainImage}} class="card-img-top" style="max-height: 20%;min-height: 20%;">
         <div *ngIf="mercado.superMarketAdditionalImages?.length>0"   class="scrollbar-deep-purple overflow-auto thin" style="white-space: nowrap; height: 20%;">    
             <img apDarkenOnHover brightness="90%" style="display: inline-block; height: 90%; width: 25%;"
                 src={{img}} *ngFor="let img of mercado.superMarketAdditionalImages" class="card-img-top ml-1 mr-1">
@@ -24,7 +23,7 @@
             <div>
                 <a [routerLink]="['/edit', mercado._id]" class="btn btn-sm btn-primary m-1 "
                     >Edit</a>
-                <a (click)="selfRemove(mercado._id)" class="btn btn-sm btn-danger m-1 float-right"
+                <a (click)="selfRemove(mercado._id, mercado.superMarketName)" class="btn btn-sm btn-danger m-1 float-right"
                     >Remove</a>
             </div>
             <div *ngIf="mercado.superMarketLocation.street"

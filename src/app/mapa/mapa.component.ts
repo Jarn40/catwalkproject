@@ -22,8 +22,10 @@ export class MapaComponent implements OnInit,OnDestroy {
   private coordMap = {}
   private getLL:Subscription;
   private getLoc:Subscription;
+  private layerRemover:Subscription;
   OSMLayer = new TileLayer({
-    source: new OSM()
+    source: new OSM(),
+    name:"MAPA"
   });
 
 
@@ -41,20 +43,25 @@ export class MapaComponent implements OnInit,OnDestroy {
     this.setMap()
     this.getLL = this.map_api.getLatLon().subscribe( val => {
       if(val){
-        this.coordMap[val[0]] = val[1]
+        this.coordMap[val[2]] = val[1]
         this.pinMercados(val)
       }
     })
-    this.getLoc = this.map_api.flyLocate().subscribe(position_name =>{
-      if(position_name){
-        this.changeV(position_name)
+    this.getLoc = this.map_api.flyLocate().subscribe(layer_id =>{
+      if(layer_id){
+        this.changeV(layer_id)
       }
-    }  
-    )
+    })
+    this.layerRemover = this.map_api.getLayertoRemove().subscribe(layer_name => {
+      if(layer_name){
+        this.removeMercado(layer_name)
+      }
+    })
   }
   ngOnDestroy(): void {
     this.getLL.unsubscribe()
     this.getLoc.unsubscribe()
+    this.layerRemover.unsubscribe()
   }
 
   setMap(){
@@ -73,8 +80,8 @@ export class MapaComponent implements OnInit,OnDestroy {
     });
   }
 
-  changeV(name){
-    let fly_to = this.coordMap[name]
+  changeV(layer_id){
+    let fly_to = this.coordMap[layer_id]
     if(fly_to){
       this.view.setCenter(fromLonLat([fly_to.lng, fly_to.lat]))
       this.view.setZoom(15)
@@ -107,10 +114,19 @@ export class MapaComponent implements OnInit,OnDestroy {
     });
     
     var vectorLayer = new VectorLayer({
-      source: vectorSource
+      source: vectorSource,
+      name: location[2],
     });
     this.map.addLayer(vectorLayer)
   }
-  
+
+  removeMercado(ref_id){
+    let layers =this.map.getLayers().getArray()
+    for( let layer in layers){
+      if(layers[layer].get('name') == ref_id){
+        return this.map.removeLayer(layers[layer])
+      }
+    }
+  } 
 }
 
