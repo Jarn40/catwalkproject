@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Supermercado } from 'src/app/interfaces/supermercado.interface';
 import { Observable } from 'rxjs';
 import { GetMercadoService } from 'src/app/services/api-mercado/api-mercado.service';
-import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 
 @Component({
@@ -62,9 +62,13 @@ export class EditMercadoComponent implements OnInit {
   }
 
   edit() {
+    this.mainControl.push(this.formBuilder.control(this.mainImg))
+    for(let item in this.additionalImg){
+      this.extraControl.push(this.formBuilder.control(this.additionalImg[item]))
+    }
     this.getMercadoService.editMercado(this.mercadoId, this.supermercadoForm.value)
       .pipe(finalize(() => {
-        this.router.navigate(['/']);
+        this.router.navigate(['/']);  
       }))
       .subscribe(
         (val) => {
@@ -86,10 +90,8 @@ export class EditMercadoComponent implements OnInit {
         var reader = new FileReader();
         reader.onload = (event: any) => {
           if (id == 'extra') {
-            this.extraControl.push(this.formBuilder.control(event.target.result));
             this.additionalImg.push(event.target.result)
           } else {
-            this.mainControl.push(this.formBuilder.control(event.target.result))
             this.mainImg = event.target.result
           }
         }

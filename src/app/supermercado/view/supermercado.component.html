@@ -1,36 +1,36 @@
 <div style="background-color: rgba(0, 0,0, 0.0); display: flex; flex-flow: row wrap">
     <div appFlyToLocation nameRef={{mercado.superMarketName}} class="card m-2 shadow" *ngFor="let mercado of supermercados"
-        style="min-width: 150px; max-width: 300px; min-height: 300px;max-height: 400px;">
-
+        style="min-width: 10rem; max-width: 20rem; max-height: 30rem;">
+        
         <img src={{mercado.superMarketMainImage}} class="card-img-top" style="max-height: 20%;min-height: 20%;">
-
-        <div class="scrollbar-deep-purple overflow-auto thin" style="white-space: nowrap; height: 20%;">
-            <img apDarkenOnHover brightness="90%" style="display: inline-block; height: 90%; width: 25%; margin: 1px;"
-                src={{img}} *ngFor="let img of mercado.superMarketAdditionalImages" class="card-img-top">
+        
+        <div *ngIf="mercado.superMarketAdditionalImages?.length>0"   class="scrollbar-deep-purple overflow-auto thin" style="white-space: nowrap; height: 20%;">    
+            <img apDarkenOnHover brightness="90%" style="display: inline-block; height: 90%; width: 25%;"
+                src={{img}} *ngFor="let img of mercado.superMarketAdditionalImages" class="card-img-top ml-1 mr-1">
         </div>
 
-        <div class="card-body m-0 p-1">
+        <div class="card-body m-0 p-1" style="max-height: 30%;">
             <h5 class="card-title text-center">{{mercado.superMarketName}}</h5>
 
-            <p *ngIf="mercado.superMarketDescription"
+            <p *ngIf="mercado.superMarketDescription; else desciptionElseBlock"
                 class="card-text overflow-auto text-justify p-1 scrollbar-deep-purple square thin"
-                style="background-color: rgba(0, 0,0, 0.05);font-size: 60%; max-height: 80px;">
+                style="background-color: rgba(0, 0,0, 0.05);font-size: 60%; max-height: 90px;">
                 {{mercado.superMarketDescription}}</p>
+            <ng-template #desciptionElseBlock><p class="card-text overflow-auto text-justify p-1 scrollbar-deep-purple square thin"
+                style="background-color: rgba(0, 0,0, 0.05);font-size: 60%; max-height: 90px;">ITEM SEM DESCRIÇÃO</p></ng-template>
 
-            <p *ngIf="mercado.superMarketPhone" class="m-0 ml-2" style="font-size: 60%;"><b>Contato:
+            <p class="m-0 ml-2" style="font-size: 60%;"><b>Contato:
                 </b>{{mercado.superMarketPhone}}</p>
-        </div>
-
-        <div>
-            <a [routerLink]="['/edit', mercado._id]" class="btn btn-sm btn-primary m-1 float-left"
-                style="position: relative;left: 0px;">Edit</a>
-            <a (click)="selfRemove(mercado._id)" class="btn btn-sm btn-danger m-1 float-right"
-                style="position: relative;right: 0px;">Remove</a>
-        </div>
-
-        <div *ngIf="mercado.superMarketLocation.street"
-            class="d-flex card-footer text-muted align-items-center text-center" style="font-size: 60%; height: 80px;">
-            <p>{{mercado.superMarketLocation | FulladdressPipe}}</p>
+            <div>
+                <a [routerLink]="['/edit', mercado._id]" class="btn btn-sm btn-primary m-1 "
+                    >Edit</a>
+                <a (click)="selfRemove(mercado._id)" class="btn btn-sm btn-danger m-1 float-right"
+                    >Remove</a>
+            </div>
+            <div *ngIf="mercado.superMarketLocation.street"
+                class="card-footer text-muted align-items-center text-center" style="font-size: 60%; height:32%;">
+                <p>{{mercado.superMarketLocation | FulladdressPipe}}</p>
+            </div>
         </div>
     </div>
 </div>
