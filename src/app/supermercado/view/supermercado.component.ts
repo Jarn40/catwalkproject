@@ -13,7 +13,7 @@ import { finalize } from 'rxjs/operators';
 export class SupermercadoComponent implements OnInit {
 
   supermercados: Supermercado[] = []
-
+  public view = false
   constructor(
     private getMercadoService: GetMercadoService,
     private mapservice: MapSearchService,
@@ -27,7 +27,7 @@ export class SupermercadoComponent implements OnInit {
     })
   }
 
-  selfRemove(id,nome) {  
+  selfRemove(id) {  
     this.getMercadoService.removeMercado(id)
     .pipe(finalize(() => {
       this.getMercadoService.getMercados().subscribe(mercado => {
@@ -38,6 +38,10 @@ export class SupermercadoComponent implements OnInit {
       .subscribe(response => {
         console.log(response)
       })
+  }
+
+  toogleView(option:HTMLInputElement){
+    this.view = option.checked
   }
 
 }

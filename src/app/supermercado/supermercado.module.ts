@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditMercadoComponent } from './edit-mercado/edit-mercado.component';
 import { DarkenOnHoverModule } from '../directives/darken-on-hover/darken-on-hover.module';
 import { flyToLocationModule } from '../directives/fly-to-location/fly-to-location.module';
+import { biggerOnHoverModule } from '../directives/bigger-on-hover/bigger-on-hover.module';
 
 @NgModule({
   declarations: [SupermercadoComponent, FulladdressPipe, AddMercadoComponent, EditMercadoComponent],
@@ -20,6 +21,7 @@ import { flyToLocationModule } from '../directives/fly-to-location/fly-to-locati
     ReactiveFormsModule,
     DarkenOnHoverModule,
     flyToLocationModule,
+    biggerOnHoverModule,
     FormsModule
   ],
   providers: [FulladdressPipe],
