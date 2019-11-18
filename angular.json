@@ -32,7 +32,9 @@
               "node_modules/bootstrap/dist/css/bootstrap.css",
               "node_modules/ol/ol.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/bootstrap/js/src/util.js"
+            ]
           },
           "configurations": {
             "production": {

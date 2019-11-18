@@ -9,6 +9,7 @@ import { MapaComponent } from './mapa/mapa.component';
 
 import { AngularSplitModule } from 'angular-split';
 import { HttpClientModule } from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -16,9 +17,10 @@ import { HttpClientModule } from '@angular/common/http';
     AppComponent,
     HomeComponent,
     MapaComponent,
-    
+
   ],
   imports: [
+    NgbModule,
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
