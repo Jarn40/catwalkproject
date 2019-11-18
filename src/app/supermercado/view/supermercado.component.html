@@ -35,6 +35,9 @@
     </div>
 </div>
 
+
+
+
 <ng-template #tableView>
     <div class="table-responsive">
 
@@ -82,9 +85,8 @@
                 <tr>
                     <td colspan="6" *ngIf="mercado.superMarketAdditionalImages?.length>0"
                         class="scrollbar-deep-purple overflow-auto thin" style="white-space: nowrap;max-width: 50rem;">
-                        <img appBiggerOnHover img_src={{img}} apDarkenOnHover brightness="90%"
-                            style="display: inline-block; width: 50px; height: 50px;" src={{img}}
-                            *ngFor="let img of mercado.superMarketAdditionalImages"
+                        <img apDarkenOnHover brightness="90%" style="display: inline-block; width: 50px; height: 50px;"
+                            src={{img}} *ngFor="let img of mercado.superMarketAdditionalImages"
                             class="ml-1 mr-1 mb-1 rounded-circle" (click)="openVerticallyCentered(content,img)">
                     </td>
                 </tr>

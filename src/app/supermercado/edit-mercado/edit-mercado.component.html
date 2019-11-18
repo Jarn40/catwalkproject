@@ -1,10 +1,14 @@
-<div class=" container bg-white border">
+<div class=" container bg-white">
     <form [formGroup]="supermercadoForm" (submit)="edit()">
         <div class="form-group">
             <label>Name
                 <input type="text" class="form-control form-control-sm" formControlName="superMarketName"
                     placeholder="Market Name" required>
             </label>
+            <ap-vmessage text="Name is Required!" *ngIf="supermercadoForm.get('superMarketName').errors?.required">
+            </ap-vmessage>
+            <ap-vmessage text="Min length is 5" *ngIf="supermercadoForm.get('superMarketName').errors?.minlength">
+            </ap-vmessage>
         </div>
 
         <div class="form-group">
@@ -12,7 +16,11 @@
                 Description:
             </label>
             <textarea formControlName="superMarketDescription" class="form-control form-control-sm"
-                placeholder="Market Description"></textarea>
+                placeholder="Market Description">
+            </textarea>
+            <ap-vmessage text="Max length is 300"
+                *ngIf="supermercadoForm.get('superMarketDescription').errors?.maxlength">
+            </ap-vmessage>
         </div>
 
         <div class="form-group">
@@ -20,86 +28,121 @@
                 <input type="number" class="form-control form-control-sm" formControlName="superMarketPhone"
                     placeholder="Market Contact">
             </label>
+            <ap-vmessage text="Only number Allowed!" *ngIf="supermercadoForm.get('superMarketPhone').errors?.pattern">
+            </ap-vmessage>
+            <ap-vmessage text="Contact is required!" *ngIf="supermercadoForm.get('superMarketPhone').errors?.required">
+            </ap-vmessage>
         </div>
+        <div class="row">
 
-        <div class="form-group" formGroupName="superMarketLocation">
-            <h3>Address</h3>
-            <div>
-                <label for="Street">Street</label>
-                <input type="text" class="form-control form-control-sm" id="Street" formControlName="street"
-                    placeholder="Address Street" required>
-            </div>
-
-            <div>
-                <label for="Number">Number</label>
-                <input type="number" class="form-control form-control-sm" id="Number" formControlName="number"
-                    placeholder="Address Number" required style="width: 150px;">
-            </div>
-
-            <div>
-                <label for="District">District</label>
-                <input type="text" class="form-control form-control-sm" id="District" formControlName="district"
-                    placeholder="District" required style="width: 150px;">
-            </div>
-
-            <div>
-                <label for="city">City</label>
-                <input type="text" class="form-control form-control-sm" id="city" formControlName="city"
-                    placeholder="City" required style="width: 150px;">
-            </div>
-
-            <label for="state">State</label>
-            <input type="text" class="form-control form-control-sm" id="state" formControlName="state"
-                placeholder="State" required style="width: 150px;">
-
-            <label for="country">Country</label>
-            <input type="text" class="form-control form-control-sm" id="country" formControlName="country"
-                placeholder="Country" required style="width: 150px;">
-
-            <label for="zip">Zip</label>
-            <input type="number" class="form-control form-control-sm" id="zip" formControlName="zip"
-                placeholder="Zip Number" required style="width: 150px;">
-
-        </div>
-
-        <div class="row container" style="width: 100%;">
-            <div class="container" style="display: inline-block; width: 50%;">
-                <div class="mb-2">
-                    <button type="button" (click)="mainImageInput.click()" class="btn btn-sm btn-primary">
-                        <i class="align-middle"> Main Image</i>
-                    </button>
-                    <input #mainImageInput hidden type="file" (change)="onSelectFile('main',$event)" accept="image/*">
-                </div>
+            <div class="form-group col-4" formGroupName="superMarketLocation">
+                <h3>Address</h3>
                 <div>
-                    <img apDarkenOnHover (click)="removeImg('main', 0)"
-                        style="display: inline-block; width: 50%; margin: 1px;" src={{mainImg}} class="card-img-top">
+                    <label for="Street">Street</label>
+                    <input type="text" class="form-control form-control-sm" id="Street" formControlName="street"
+                        placeholder="Address Street" required>
+                    <ap-vmessage text="Street is required!"
+                        *ngIf="supermercadoForm.get('superMarketLocation').get('street').errors?.required">
+                    </ap-vmessage>
                 </div>
+
+                <div>
+                    <label for="Number">Number</label>
+                    <input type="number" class="form-control form-control-sm" id="Number" formControlName="number"
+                        placeholder="Address Number" required style="width: 150px;">
+                    <ap-vmessage text="Only number Allowed!"
+                        *ngIf="supermercadoForm.get('superMarketLocation').get('number').errors?.pattern">
+                    </ap-vmessage>
+                    <ap-vmessage text="Address Number is required!"
+                        *ngIf="supermercadoForm.get('superMarketLocation').get('number').errors?.required">
+                    </ap-vmessage>
+                </div>
+
+                <div>
+                    <label for="District">District</label>
+                    <input type="text" class="form-control form-control-sm" id="District" formControlName="district"
+                        placeholder="District" required style="width: 150px;">
+                    <ap-vmessage text="Street is required!"
+                        *ngIf="supermercadoForm.get('superMarketLocation').get('district').errors?.required">
+                    </ap-vmessage>
+                </div>
+
+                <div>
+                    <label for="city">City</label>
+                    <input type="text" class="form-control form-control-sm" id="city" formControlName="city"
+                        placeholder="City" required style="width: 150px;">
+                    <ap-vmessage text="Street is required!"
+                        *ngIf="supermercadoForm.get('superMarketLocation').get('city').errors?.required">
+                    </ap-vmessage>
+                </div>
+
+                <label for="state">State</label>
+                <input type="text" class="form-control form-control-sm" id="state" formControlName="state"
+                    placeholder="State" required style="width: 150px;">
+                <ap-vmessage text="Street is required!"
+                    *ngIf="supermercadoForm.get('superMarketLocation').get('state').errors?.required">
+                </ap-vmessage>
+
+                <label for="country">Country</label>
+                <input type="text" class="form-control form-control-sm" id="country" formControlName="country"
+                    placeholder="Country" required style="width: 150px;">
+                <ap-vmessage text="Street is required!"
+                    *ngIf="supermercadoForm.get('superMarketLocation').get('country').errors?.required">
+                </ap-vmessage>
+
+                <label for="zip">Zip</label>
+                <input type="number" class="form-control form-control-sm" id="zip" formControlName="zip"
+                    placeholder="Zip Number" required style="width: 150px;">
+                <ap-vmessage text="Only number Allowed!"
+                    *ngIf="supermercadoForm.get('superMarketLocation').get('zip').errors?.pattern">
+                </ap-vmessage>
+                <ap-vmessage text="Street is required!"
+                    *ngIf="supermercadoForm.get('superMarketLocation').get('zip').errors?.required">
+                </ap-vmessage>
+
             </div>
 
-            <div class="container" style="display: inline-block; width: 50%;">
-                <div class="mb-2">
-                    <button type="button" (click)="additionalImagesInput.click()" class="btn btn-sm btn-primary">
-                        <i class="align-middle"> Aditional Image</i>
-                    </button>
-                    <input #additionalImagesInput hidden name="files[]" type="file" accept="image/*"
-                        (change)="onSelectFile('extra',$event)" multiple>
+            <div class="row container col-8 ml-1" style="width: 100%;">
+                <div class="container shadow-sm col-4" style="display: inline-block; width: 50%;">
+                    <div class="mb-2">
+                        <button type="button" (click)="mainImageInput.click()" class="btn btn-sm btn-primary">
+                            <i class="align-middle"> Main Image</i>
+                        </button>
+                        <input #mainImageInput hidden type="file" (change)="onSelectFile('main',$event)"
+                            accept="image/*">
+                    </div>
+                    <div>
+                        <img *ngIf=mainImg apDarkenOnHover (click)="removeImg('main', 0)"
+                            style="width: 5rem; height: 5rem; margin: 1px;" src={{mainImg}}
+                            class="card-img-top rounded-circle">
+                    </div>
                 </div>
-                <div class="container" style="display: inline-block;">
-                    <img class="m-1" apDarkenOnHover (click)="removeImg('extra',i)"
-                        *ngFor="let extraImg of additionalImg;let i = index" style=" display:
-                            inline-block; width: 25%; height: 25%;; margin: 1px;" src={{extraImg}}
-                        class="card-img-top">
+
+                <div class="container shadow-sm col-8">
+                    <div class="mb-2">
+                        <button type="button" (click)="additionalImagesInput.click()" class="btn btn-sm btn-primary">
+                            <i class="align-middle"> Aditional Image</i>
+                        </button>
+                        <input #additionalImagesInput hidden name="files[]" type="file" accept="image/*"
+                            (change)="onSelectFile('extra',$event)" multiple>
+                    </div>
+                    <div class="container" style="display: flex; flex-flow: row wrap">
+                        <img class="m-1 rounded-circle card-img-top"
+                            *ngFor="let extraImg of additionalImg;let i = index" apDarkenOnHover
+                            (click)="removeImg('extra',i)" style=" display:
+                                    inline-block; margin: 1px; width: 5rem; height: 5rem" src={{extraImg}}>
+
+
+                    </div>
                 </div>
             </div>
         </div>
 
 
         <div>
-            <button class="btn btn-sm btn-success m-2" type="submit">Edit</button>
+            <button class="btn btn-sm btn-success m-2" type="submit" [disabled]="supermercadoForm.invalid">Edit</button>
             <button [routerLink]="['']" class="btn btn-sm btn-danger m-2 " type="submit">Cancel</button>
         </div>
 
     </form>
-    <!-- [disabled]="!supemercadoForm.valid" -->
-
 </div>

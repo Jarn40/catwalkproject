@@ -49,7 +49,7 @@ export class SupermercadoComponent implements OnInit {
 
   openVerticallyCentered(content, img) {
     this.modalImage = img
-    this.modalService.open(content, { centered: true, size: 'xl' });
+    this.modalService.open(content, { centered: true, size: 'xl', windowClass: 'custom-modal' });
   }
 
 }
