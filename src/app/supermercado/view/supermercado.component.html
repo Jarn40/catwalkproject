@@ -29,7 +29,7 @@
         <div class=" align-middle">
             <div class="card-body">
                 <p class="card-text overflow-auto text-justify p-1 scrollbar-deep-purple square thin"
-                    *ngIf="mercado.superMarketDescription; else desciptionElseBlock">
+                    *ngIf="mercado.superMarketDescription">
                     {{mercado.superMarketDescription}}</p>
             </div>
         </div>
@@ -64,7 +64,7 @@
                     </td>
                     <td class="align-middle">{{mercado.superMarketPhone}}</td>
                     <td class="align-middle">
-                        <p *ngIf="mercado.superMarketDescription; else desciptionElseBlock"
+                        <p *ngIf="mercado.superMarketDescription;"
                             class="card-text overflow-auto  p-1 scrollbar-deep-purple square thin">
                             {{mercado.superMarketDescription}}</p>
                     </td>
