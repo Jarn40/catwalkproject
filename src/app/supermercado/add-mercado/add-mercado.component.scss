@@ -1,0 +1,17 @@
+.mainImg{
+    width: 5rem;
+    height: 5rem;
+    margin: 1px;
+}
+
+.extra-img-wrapper{
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.extraImg{
+    display:inline-block;
+    margin: 1px;
+    width: 5rem;
+    height: 5rem
+}

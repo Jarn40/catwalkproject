@@ -130,5 +130,10 @@
       }
     }
   },
-  "defaultProject": "catwalkfront"
+  "defaultProject": "catwalkfront",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }
