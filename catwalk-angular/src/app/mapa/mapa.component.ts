@@ -10,12 +10,24 @@ import Point from 'ol/geom/Point';
 import {Icon, Style} from 'ol/style';
 import { MapSearchService } from '../services/map-search/map-search.service';
 import { Observable, Subscription } from 'rxjs';
+// import Cesium from 'cesium/Build/Cesium/Cesium.js'
+import * as Cesium from 'cesium/Build/Cesium/Cesium.js';
+import OLCesium from 'ol-cesium';
+
+// import Cesium from 'cesium/Cesium';
+// require('cesium/Widgets/widgets.css');
+// import OLCesium from 'ol-cesium';
+// window['Cesium'] = '../../../node_modules/cesium/Build/Cesium/Cesium.js';
+// window['Cesium'] = Cesium;
+
 @Component({
   selector: 'app-mapa',
   templateUrl: './mapa.component.html',
   styleUrls: ['./mapa.component.scss']
 })
 export class MapaComponent implements OnInit,OnDestroy {
+  // private Cesium = Cesium
+  // private Cesium = require('cesium/Build/Cesium/Cesium.js')
   private brasil = fromLonLat([-43.1917, -22.9034]);
   private view: View;
   private map: Map;
@@ -78,6 +90,13 @@ export class MapaComponent implements OnInit,OnDestroy {
       loadTilesWhileInteracting: false,
       view: this.view
     });
+    Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiMWUwMzhkNS1hNzBjLTQyOTMtYjgyYS01OWJjNTVlYzVmY2UiLCJpZCI6MTg4MzIsInNjb3BlcyI6WyJhc3IiLCJnYyJdLCJpYXQiOjE1NzQ0NDk2MDN9.sLrdVNWFVUO32HaWzj6MA94IO6doEl7YGiKJoxddT68';
+    const ol3d = new OLCesium({map: this.map,time() {
+      return Cesium.JulianDate.now();
+    }}); // ol2dMap is the ol.Map instance
+    // const scene = ol3d.getCesiumScene();
+    // scene.terrainProvider = Cesium.createWorldTerrain();
+    ol3d.setEnabled(true);
   }
 
   changeV(layer_id){
