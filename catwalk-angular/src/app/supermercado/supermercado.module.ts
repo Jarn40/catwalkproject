@@ -11,6 +11,8 @@ import { EditMercadoComponent } from './edit-mercado/edit-mercado.component';
 import { DarkenOnHoverModule } from '../directives/darken-on-hover/darken-on-hover.module';
 import { flyToLocationModule } from '../directives/fly-to-location/fly-to-location.module';
 import { biggerOnHoverModule } from '../directives/bigger-on-hover/bigger-on-hover.module';
+import { VMessageComponent } from '../vmessage/vmessage.component';
+import { VMessageModule } from '../vmessage/vmessage.module';
 
 @NgModule({
   declarations: [SupermercadoComponent, FulladdressPipe, AddMercadoComponent, EditMercadoComponent],
@@ -18,6 +20,7 @@ import { biggerOnHoverModule } from '../directives/bigger-on-hover/bigger-on-hov
     CommonModule,
     RouterModule,
     HttpClientModule,
+    VMessageModule,
     ReactiveFormsModule,
     DarkenOnHoverModule,
     flyToLocationModule,

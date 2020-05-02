@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Supermercado } from 'src/app/interfaces/supermercado.interface';
 import { Observable } from 'rxjs';
 import { GetMercadoService } from 'src/app/services/api-mercado/api-mercado.service';
-import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 
 @Component({
@@ -29,17 +29,17 @@ export class EditMercadoComponent implements OnInit {
 
   ngOnInit() {
     this.supermercadoForm = this.formBuilder.group({
-      superMarketName: this.formBuilder.control(''),
-      superMarketDescription: this.formBuilder.control(''),
-      superMarketPhone: this.formBuilder.control(''),
+      superMarketName: this.formBuilder.control('', Validators.compose([Validators.required, Validators.minLength(5)])),
+      superMarketDescription: this.formBuilder.control('', Validators.compose([Validators.maxLength(300)])),
+      superMarketPhone: this.formBuilder.control('', Validators.compose([Validators.required, Validators.pattern('^\\d+$')])),
       superMarketLocation: new FormGroup({
-        street: this.formBuilder.control(''),
-        number: this.formBuilder.control(''),
-        district: this.formBuilder.control(''),
-        city: this.formBuilder.control(''),
-        state: this.formBuilder.control(''),
-        country: this.formBuilder.control(''),
-        zip: this.formBuilder.control('')
+        street: this.formBuilder.control('', Validators.compose([Validators.required])),
+        number: this.formBuilder.control('', Validators.compose([Validators.required, Validators.pattern('^\\d+$')])),
+        district: this.formBuilder.control('', Validators.compose([Validators.required])),
+        city: this.formBuilder.control('', Validators.compose([Validators.required])),
+        state: this.formBuilder.control('', Validators.compose([Validators.required])),
+        country: this.formBuilder.control('', Validators.compose([Validators.required])),
+        zip: this.formBuilder.control('', Validators.compose([Validators.required, Validators.pattern('^\\d+$')]))
       }),
       superMarketMainImage: this.formBuilder.array([]),
       superMarketAdditionalImages: this.formBuilder.array([])
@@ -63,12 +63,12 @@ export class EditMercadoComponent implements OnInit {
 
   edit() {
     this.mainControl.push(this.formBuilder.control(this.mainImg))
-    for(let item in this.additionalImg){
+    for (let item in this.additionalImg) {
       this.extraControl.push(this.formBuilder.control(this.additionalImg[item]))
     }
     this.getMercadoService.editMercado(this.mercadoId, this.supermercadoForm.value)
       .pipe(finalize(() => {
-        this.router.navigate(['/']);  
+        this.router.navigate(['/']);
       }))
       .subscribe(
         (val) => {

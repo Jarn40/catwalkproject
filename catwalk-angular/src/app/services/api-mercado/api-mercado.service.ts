@@ -29,6 +29,8 @@ export class GetMercadoService {
       API_URL + "/insertOne",
       mercado,
       {
+        observe: 'events',
+        reportProgress: true,
         headers: {
           'Content-Type': 'application/json'
         }

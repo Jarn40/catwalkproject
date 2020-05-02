@@ -4,6 +4,7 @@ import { GetMercadoService } from '../../services/api-mercado/api-mercado.servic
 import { MapSearchService } from "../../services/map-search/map-search.service"
 import { FulladdressPipe } from '../../pipes/fulladdress.pipe';
 import { finalize } from 'rxjs/operators';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-supermercado',
@@ -12,12 +13,14 @@ import { finalize } from 'rxjs/operators';
 })
 export class SupermercadoComponent implements OnInit {
 
-  supermercados: Supermercado[] = []
+  public supermercados: Supermercado[] = []
   public view = false
+  public modalImage = ""
   constructor(
     private getMercadoService: GetMercadoService,
     private mapservice: MapSearchService,
-    private jsonToString: FulladdressPipe
+    private jsonToString: FulladdressPipe,
+    private modalService: NgbModal
   ) { }
 
   ngOnInit() {
@@ -27,21 +30,26 @@ export class SupermercadoComponent implements OnInit {
     })
   }
 
-  selfRemove(id) {  
+  selfRemove(id) {
     this.getMercadoService.removeMercado(id)
-    .pipe(finalize(() => {
-      this.getMercadoService.getMercados().subscribe(mercado => {
-        this.supermercados = mercado
-        this.mapservice.removeUpdate(id)
-      })
-    }))
+      .pipe(finalize(() => {
+        this.getMercadoService.getMercados().subscribe(mercado => {
+          this.supermercados = mercado
+          this.mapservice.removeUpdate(id)
+        })
+      }))
       .subscribe(response => {
         console.log(response)
       })
   }
 
-  toogleView(option:HTMLInputElement){
+  toogleView(option: HTMLInputElement) {
     this.view = option.checked
+  }
+
+  openVerticallyCentered(content, img) {
+    this.modalImage = img
+    this.modalService.open(content, { centered: true, size: 'xl', windowClass: 'custom-modal' });
   }
 
 }

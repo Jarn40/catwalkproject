@@ -15,8 +15,6 @@ border-radius: 10px;
 background-color: #512da8;
 box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1); }
     
-   
-    
 .bordered-deep-purple::-webkit-scrollbar-track {
 -webkit-box-shadow: none;
 border: 1px solid #512da8;
@@ -43,5 +41,9 @@ border-radius: 0 !important; }
 
 .thin::-webkit-scrollbar {
 width: 2px;
-height: 2px; }
+height: 6px; }
 
+.custom-modal .modal-content{
+    background-color: transparent;
+    border:none;
+}

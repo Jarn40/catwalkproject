@@ -1,88 +1,93 @@
+<ng-template #content let-modal>
+    <div class="modal-body text-center align-middle" (click)="modal.close('Close click')">
+        <img class="modal-big-img" src={{modalImage}}>
+    </div>
+</ng-template>
 
 <div class="m-2">
     <div class="custom-switch float-right">
+        <label *ngIf="!view;" class="mr-5">Toogle to Details/Edit View</label>
+        <label *ngIf="view;" class="mr-5">Toogle to Card View</label>
         <input #altView type="checkbox" class="custom-control-input" id="viewToggler" (change)="toogleView(altView)">
-        <label class="custom-control-label" for="viewToggler"></label>
+        <label class=" custom-control-label" for="viewToggler"></label>
     </div>
     <button [routerLink]="['/add-mercado']" class=" btn btn-sm btn-primary">Add</button>
 </div>
 
-<div *ngIf="view;else tableView" style="background-color: rgba(0, 0,0, 0.0); display: flex; flex-flow: row wrap">
-    <div appFlyToLocation nameRef={{mercado._id}} class="card m-2 shadow" *ngFor="let mercado of supermercados"
-        style="min-width: 10rem; max-width: 20rem; max-height: 30rem;">
-        
-        <img appBiggerOnHover target={{bigImage}} img_src={{mercado.superMarketMainImage}}  *ngIf="mercado.superMarketMainImage" src={{mercado.superMarketMainImage}} class="card-img-top" style="max-height: 20%;min-height: 20%;">
-        <div *ngIf="mercado.superMarketAdditionalImages?.length>0"   class="scrollbar-deep-purple overflow-auto thin" style="white-space: nowrap; height: 20%;">    
-            <img appBiggerOnHover img_src={{img}} apDarkenOnHover brightness="90%" style="display: inline-block; height: 90%; width: 25%;"
-                src={{img}} *ngFor="let img of mercado.superMarketAdditionalImages" class="card-img-top ml-1 mr-1">
+<div class="card-wrapper scrollbar-deep-purple square" *ngIf=" !view;else tableView">
+
+    <div class="card custom-card m-2 shadow text-center" appFlyToLocation nameRef={{mercado._id}}
+        *ngFor="let mercado of supermercados">
+
+        <h5 class="card-header">{{mercado.superMarketName}}</h5>
+
+        <div class="text-center">
+            <img class="card-img-top  mainImg pt-1 shadow" *ngIf="mercado.superMarketMainImage"
+                src={{mercado.superMarketMainImage}}
+                (click)="openVerticallyCentered(content,mercado.superMarketMainImage)">
         </div>
-
-        <div class="card-body m-0 p-1" style="max-height: 30%;">
-            <h5 class="card-title text-center">{{mercado.superMarketName}}</h5>
-
-            <p *ngIf="mercado.superMarketDescription; else desciptionElseBlock"
-                class="card-text overflow-auto text-justify p-1 scrollbar-deep-purple square thin"
-                style="background-color: rgba(0, 0,0, 0.05);font-size: 60%; max-height: 90px;">
-                {{mercado.superMarketDescription}}</p>
-            <ng-template #desciptionElseBlock><p class="card-text overflow-auto text-justify p-1 scrollbar-deep-purple square thin"
-                style="background-color: rgba(0, 0,0, 0.05);font-size: 60%; max-height: 90px;">ITEM SEM DESCRIÇÃO</p></ng-template>
-
-            <p class="m-0 ml-2" style="font-size: 60%;"><b>Contato:
-                </b>{{mercado.superMarketPhone}}</p>
-            <div>
-                <a [routerLink]="['/edit', mercado._id]" class="btn btn-sm btn-primary m-1 "
-                    >Edit</a>
-                <a (click)="selfRemove(mercado._id)" class="btn btn-sm btn-danger m-1 float-right"
-                    >Remove</a>
-            </div>
-            <div *ngIf="mercado.superMarketLocation.street"
-                class="card-footer text-muted align-items-center text-center" style="font-size: 60%; height:32%;">
-                <p>{{mercado.superMarketLocation | FulladdressPipe}}</p>
+        <div class=" align-middle">
+            <div class="card-body">
+                <p class="card-text overflow-auto text-justify p-1 scrollbar-deep-purple square thin"
+                    *ngIf="mercado.superMarketDescription">
+                    {{mercado.superMarketDescription}}</p>
             </div>
         </div>
     </div>
 </div>
 
-
-
 <ng-template #tableView>
-    <table class="table table-hover align-items-center text-center" style="font-size: 60%;">
-        <thead>
-            <tr>
-                <th scope="col">Main Picture</th>
-                <th scope="col">Name</th>
-                <th scope="col">Contact</th>
-                <th scope="col">Description</th>
-                <th scope="col">Address</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
-        <tbody *ngFor="let mercado of supermercados" appFlyToLocation nameRef={{mercado._id}}>
-            <tr >
-                <td>
-                    <img appBiggerOnHover target={{bigImage}} img_src={{mercado.superMarketMainImage}}  *ngIf="mercado.superMarketMainImage" src={{mercado.superMarketMainImage}}  style="max-height: 20%;min-height: 20%;">
-                </td>
-                <td><h5>{{mercado.superMarketName}}</h5></td>
-                <td>{{mercado.superMarketPhone}}</td>
-                <td><p *ngIf="mercado.superMarketDescription; else desciptionElseBlock"
-                    class="card-text overflow-auto  fy p-1 scrollbar-deep-purple square thin"
-                    style="max-height: 90px;">
-                    {{mercado.superMarketDescription}}</p></td>
-                <td ><p class="card-text overflow-auto pr-3 scrollbar-deep-purple square thin" style="max-height: 90px;">{{mercado.superMarketLocation | FulladdressPipe}}</p></td>
-                <td>
-                    <a [routerLink]="['/edit', mercado._id]" class="btn btn-sm btn-primary m-1 "
-                        >Edit</a>
-                    <a (click)="selfRemove(mercado._id)" class="btn btn-sm btn-danger m-1 float-right"
-                        >Remove</a>
-                            
-                </td>
-            </tr>
-            <tr>
-                <td colspan="8" *ngIf="mercado.superMarketAdditionalImages?.length>0"   class="scrollbar-deep-purple overflow-auto thin" style="white-space: nowrap; border:2px">    
-                        <img appBiggerOnHover img_src={{img}} apDarkenOnHover brightness="90%" style="display: inline-block; width: 50px; height: 50px;"
-                            src={{img}} *ngFor="let img of mercado.superMarketAdditionalImages" class="ml-1 mr-1 mb-2 rounded-circle">
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="table-responsive scrollbar-deep-purple thin" style="height: 90vh;">
+
+        <table class="table table-hover shadow">
+            <thead class="text-center">
+                <tr>
+                    <th scope="col">Main Picture</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Contact</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let mercado of supermercados" appFlyToLocation nameRef={{mercado._id}}
+                class="shadow-sm mb-3">
+
+                <tr class="text-center">
+                    <td>
+                        <img class="mainImg shadow" *ngIf=" mercado.superMarketMainImage"
+                            src={{mercado.superMarketMainImage}}
+                            (click)="openVerticallyCentered(content,mercado.superMarketMainImage)">
+                    </td>
+                    <td class="align-middle">
+                        <h5>{{mercado.superMarketName}}</h5>
+                    </td>
+                    <td class="align-middle">{{mercado.superMarketPhone}}</td>
+                    <td class="align-middle">
+                        <p *ngIf="mercado.superMarketDescription;"
+                            class="card-text overflow-auto  p-1 scrollbar-deep-purple square thin">
+                            {{mercado.superMarketDescription}}</p>
+                    </td>
+
+                    <td class="align-middle">
+                        <p class="card-text overflow-auto pr-3 scrollbar-deep-purple square thin">
+                            {{mercado.superMarketLocation | FulladdressPipe}}</p>
+                    </td>
+                    <td class=" align-middle">
+                        <a [routerLink]="['/edit', mercado._id]" class="btn btn-sm btn-primary m-1 ">Edit</a>
+                        <a (click)="selfRemove(mercado._id)" class="btn btn-sm btn-danger m-1 float-right">Remove</a>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="6" *ngIf="mercado.superMarketAdditionalImages?.length>0"
+                        class="scrollbar-deep-purple overflow-auto thin extra-img-wrapper">
+                        <img class="ml-1 mr-1 mb-1 rounded-circle extraImg shadow" apDarkenOnHover brightness="90%"
+                            src={{img}} *ngFor="let img of mercado.superMarketAdditionalImages"
+                            (click)="openVerticallyCentered(content,img)">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </ng-template>

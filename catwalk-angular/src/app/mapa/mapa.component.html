@@ -1,25 +1,3 @@
-<script src="https://cesium.com/downloads/cesiumjs/releases/1.63.1/Build/Cesium/Cesium.js"></script>
-<link href="https://cesium.com/downloads/cesiumjs/releases/1.63.1/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
-
-<script src='../../../node_modules/cesium/Build/Cesium/Cesium.js'></script>
-
 <div class="map-box container-flex">
-    <div style="width:100%; height: 100%;" id="map" class="map"></div>
+    <div class="map" id="map"></div>
 </div>
-
-<script>
-  
-  /* eslint-disable no-var */
-  var mode = window.location.href.match(/mode=([a-z0-9\-]+)\&?/i);
-  var isDev = mode && mode[1] === 'dev';
-  window.IS_DEV = isDev;
-  var cs = isDev ? 'CesiumUnminified/Cesium.js' : 'Cesium/Cesium.js';
-  console.log(cs)
-  window.CESIUM_URL = `../node_modules/@camptocamp/cesium/Build/${cs}`;
-  if (!window.LAZY_CESIUM) {
-    document.write(`<scr${'i'}pt type="text/javascript" src="${window.CESIUM_URL}"></scr${'i'}pt>`);
-  }
-
-  /* eslint-enable no-var */
-
-</script>
